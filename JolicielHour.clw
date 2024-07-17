@@ -16,7 +16,7 @@ Hour:eT3HourFormat         EQUATE('@T3')
 Hour:eT4HourFormat         EQUATE('@T4')
 Hour:eT5HourFormat         EQUATE('@T5')
 Hour:eNoValue              EQUATE('Missing Parameter')
-Hour:eNoValueA             EQUATE('Paramètre manquant')
+Hour:eNoValueA             EQUATE('ParamÃ¨tre manquant')
 
 !! Procedure Group Declaration for: HourIncoming
 HourIncoming         GROUP,PRE(HourSav),BINDABLE,THREAD
@@ -67,7 +67,7 @@ Function  : Hour(irxHour,sxTnnHourFormat,sxSuffix)
 Hour      FUNCTION((irxHour,sxTnnHourFormat,sxSuffix)
 ilxHour             ! Time in 100th of a second
 sxTnnHourFormat     ! Time Format between '@t1' and '@t20'
-sxSuffix            ! Time Suffix unit 10h15
+sxSuffix            ! Time Suffix unit separator 10h15
 
      Where
          ilxHour
@@ -236,7 +236,7 @@ ________________________________________________________________________________
     Published    : None                                         
      Notice      : None
      Author      : Robert Gaudreau,
-                   205 Bégon
+                   205 BÃ©gon
                    Auteuil, Qc, H7H 2A4
 ___________________________________________________________________________________________
 !*HourDocumentation*!
