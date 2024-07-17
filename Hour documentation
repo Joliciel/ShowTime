@@ -100,7 +100,7 @@ Steps:
 3. Call `Hour` function with the array.
 
 ### Compiler and Environment:
-- **Compiler**: Clarion v2.1 release 2108
+- **Compiler**: Clarion v2.1 release 2108 and all Clarion Windows versions
 - **Environment**: Called as a function
 
 ### References:
