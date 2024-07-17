@@ -1,0 +1,119 @@
+**Hour Function Documentation**
+
+**Purpose**: 
+The `Hour` function converts a numeric value into a string formatted according to a specified time picture, ranging from hundredths of a second to years.
+
+**Program**: 
+Universal Module
+
+**Module**: 
+Hour.cla
+
+**Map**: 
+Hour function within Hour.cla module
+
+```clarion
+MAP
+    MODULE('Hour.clw')
+        Hour FUNCTION(REAL, STRING, STRING), STRING
+    .
+.
+.
+Function: Hour(irxHour, sxTnnHourFormat, sxSuffix)
+Hour FUNCTION((irxHour, sxTnnHourFormat, sxSuffix)
+ilxHour        ! Time in hundredths of a second
+sxTnnHourFormat! Time Format between '@t1' and '@t20'
+sxSuffix       ! Time Suffix unit 10h15
+```
+
+### Parameters:
+
+- **ilxHour**: 
+  The computed time value. This parameter is numeric and cannot be omitted.
+
+- **sxTnnHourFormat**: 
+  The time format, returning one of the available picture formats. This parameter is a string and can be omitted. Example formats include:
+  - `@t1` -> `.....hhhhhh:mm`
+  - `@t2` -> `.....hhhhhhmm`
+  - `@t3` -> `.....hhhhhh:mmxm`
+  - `@t4` -> `.....hhhhhh:mm:ss`
+  - `@t5` -> `.....hhhhhh:mm:ss:cc`
+
+- **sxSuffix**: 
+  The time suffix unit, identifying the time suffix (e.g., Year, Month, Week, Day, Hour, Minute, Second, Hundredth of a Second). This parameter can be any letter or character and can be omitted.
+
+### Usage:
+
+**Where to Use**:
+- Menu, table, form, report, batch processes, or other types of procedures.
+
+**When to Use**:
+- To count the number of days, hours, minutes, seconds, and hundredths of a second.
+- To measure elapsed time in a project or task.
+- To use as a chronometer.
+
+**How to Use**:
+Used as a function call:
+```clarion
+StringVariable = Hour(TimeComputed, TimeFormat, TimeSuffix)
+```
+
+**Example Code**:
+```clarion
+CODE
+begTime = CLOCK()
+LOOP
+    endTime = CLOCK()
+    cTime = endTime - begTime + 1
+    Pre:sTime = Hour(cTime, '@t1', '!')
+    Pre:sTime = Hour(cTime)  ! Use the internal default format
+END
+```
+
+The above procedure counts the elapsed time between the beginning and the current time. The `Hour` function converts the `cTime` long value into a string according to the specified picture format (`@t1` and `!`). 
+
+**Result**:
+```
+22!15
+```
+
+### Advanced Usage:
+
+**Using External Suffix**:
+```clarion
+StringVariable = Hour(TimeComputed, TimeFormat, TimeSuffix)
+```
+
+Steps:
+1. Define a group with each format item of the language.
+2. Define an array over the group.
+3. Call `Hour` function with the array.
+
+**Using External Message**:
+```clarion
+StringVariable = Hour(TimeComputed, TimeFormat, TimeSuffix)
+```
+
+Steps:
+1. Define a group with each format item of the language.
+2. Define an array over the group.
+3. Call `Hour` function with the array.
+
+### Compiler and Environment:
+- **Compiler**: Clarion v2.1 release 2108
+- **Environment**: Called as a function
+
+### References:
+- Clarion reference, Chapter 13: DATE(), CLOCK(), TODAY(), AGE(), YEAR(), MONTH()
+
+### Version:
+- **Version**: 1.0
+- **Created Date**: 92/1/1
+- **Modified Date**: Various dates from 92/1/2 to 03/03/01
+
+### Author:
+Robert Gaudreau  
+robert.gaudreau@joliciel.com
+---
+
+This documentation provides a comprehensive overview of the `Hour` function, detailing its purpose, parameters, usage, examples, and additional information.
