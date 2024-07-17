@@ -1,0 +1,120 @@
+# ShowTime Function Documentation
+
+## Purpose
+The `ShowTime` function converts a numeric time value into a formatted string, supporting various time units ranging from hundredths of a second to years.
+
+## Overview
+**Module:** `ShowTime.clw`  
+**Function Signature:** `ShowTime(REAL, <STRING>, <STRING>, <*STRING[,]>, <*STRING[,]>) RETURN STRING`
+
+### Parameters
+- **TimeComputed:** (REAL) The computed time value in hundredths of a second. This parameter is required.
+- **TimeFormat:** (STRING) The desired time format using tokens (e.g., '@t1', '@t20'). This parameter is optional.
+- **TimeSuffix:** (STRING) The unit suffix for the time (e.g., 'h' for hours, 'm' for minutes). This parameter is optional.
+- **TimeLanguage:** (INTEGER) The language format for time units (1 for English, 2 for French). This parameter is optional.
+- **ExternalSuffixArray:** (2D STRING ARRAY) User-defined suffixes for time units. This parameter is optional.
+- **ExternalMessageArray:** (2D STRING ARRAY) User-defined messages for error handling. This parameter is optional.
+
+### Time Formats
+The `TimeFormat` parameter allows various time formats, indicated by tokens '@t1' to '@t44'. Each token represents a specific time structure. For example:
+
+- `@t1` - 'hh:mm'
+- `@t2` - 'hhmm'
+- `@t3` - 'hh:mm Am/Pm'
+- `@t4` - 'hh:mm:ss'
+- `@t5` - 'hh:mm:ss:cc'
+- `@t6` - 'mmmm:ss'
+- `@t7` - 'mmmm:ss:cc'
+- ...
+
+### Suffix Formats
+The `TimeSuffix` parameter allows customization of suffix formats, such as:
+
+- `)` - 'hh)mm'
+- `%` - 'YY%OO%hh%mm%ss%cc%'
+- `!` - 'OO!hh!mm'
+- `-` - 'hh-mm'
+- `/` - 'hh/mm/ss/cc'
+- ...
+
+### Language Formats
+The `TimeLanguage` parameter defines the language used for time units:
+
+- **English:** 'Year', 'Month', 'Week', 'Day', 'hour', 'minute', 'second', 'cent'
+- **French:** 'Année', 'Mois', 'Semaine', 'Jour', 'heure', 'minute', 'seconde', 'cent'
+
+### External Suffix and Message Arrays
+The `ExternalSuffixArray` and `ExternalMessageArray` parameters allow for custom suffixes and messages in different languages or formats.
+
+## Usage
+The `ShowTime` function can be used in various applications, such as reports, project time tracking, and more. It can be called within loops, functions, and procedures to convert and display time values.
+
+### Examples
+
+#### Basic Usage
+```clarion
+begTime = CLOCK()
+LOOP
+  endTime = CLOCK()
+  cTime = endTime - begTime + 1
+  Pre:sTime = ShowTime(cTime, '@t1', '!', 1)
+  Pre:sTime = ShowTime(cTime)  ! Use the internal default format
+END
+```
+
+#### Using External Suffix
+```clarion
+gLangSuffix GROUP              ! Suffix format
+  STRING('Y       M       W       D       h       m       s       c       ')
+  STRING('Yr      Mth     Wk      Dy      hour    minute  second  cen     ')
+  STRING('A       M       S       J       h       m       s       c       ')
+  STRING('An      Ms      Semaine Jr      heure   minute  seconde cen     ')
+  ...
+ds8Suffix STRING(8), DIM(3, 16), OVER(gSuffix)  ! Get the time suffix from gSuffix
+
+begTime = CLOCK()
+LOOP
+  endTime = CLOCK()
+  cTime = endTime - begTime + 1
+  Pre:sTime = ShowTime(cTime, '@t30', '$', 3, ds8Suffix[])
+  Pre:sTime = ShowTime(cTime)  ! Use the internal default format
+END
+```
+
+#### Using External Message
+```clarion
+gLangSuffix GROUP              ! Suffix format
+  STRING('Y       M       W       D       h       m       s       c       ')
+  STRING('Yr      Mth     Wk      Dy      hour    minute  second  cen     ')
+  STRING('Missing Parameter                                               ')
+  STRING('Wrong Format                                                    ')
+  STRING('Reformat                                                        ')
+  ...
+ds8Suffix STRING(8), DIM(3, 40), OVER(gSuffix)   ! Get the time suffix from gSuffix
+dsMessage STRING(64), DIM(3, 5), OVER(gSuffix)   ! Get the ErrorMessage
+
+begTime = CLOCK()
+LOOP
+  endTime = CLOCK()
+  Pre:sTime = ShowTime(endTime - begTime, '@t30', '$', 3, ds8Suffix[], dsMessage[])
+  mTemps = ShowTime(CLOCK())
+  mTemps = ShowTime(endTime, s4TnnFormat, s1Separator, ibLangue)
+  mTemps = ShowTime(endTime, s4TnnFormat, s1Separator, ibLangue, ds8Suffix[])
+  mTemps = ShowTime(Tem:irTemps, s4TnnFormat, s1Separator, ibLangue, ds8Suffix[], dsMessage[])
+  mTemps = ShowTime(CLOCK(), s4TnnFormat, s1Separator, ibLangue, ds8Suffix[], dsMessage[])
+  mTemps = ShowTime(Tem:irTemps, s4TnnFormat, s1Separator, ibLangue, ds8Suffix[], dsMessage[])
+  mTemps = ShowTime(CLOCK(), s4TnnFormat, s1Separator, ibLangue, ds8Suffix[], dsMessage[])
+END
+```
+
+## Notes
+### Julian Year Format
+The Julian Year format is supported from tokens `@t39` to `@t44`.
+
+### Performance
+The speed of the `ShowTime` function is approximately 1/5th of a second. For faster performance, consider using the `HOUR` function, but for greater versatility and flexibility, use `ShowTime`.
+
+## Conclusion
+The `ShowTime` function is a versatile tool for converting numeric time values into formatted strings, supporting a wide range of formats and customization options. It is suitable for various applications where time formatting is required.
+
+---
