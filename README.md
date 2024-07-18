@@ -1,4 +1,4 @@
-### Title: Time Formatting Utility - ShowTime Function
+### Title: Time Formatting Utility - ShowTime and Hour Functions
 
 ---
 
